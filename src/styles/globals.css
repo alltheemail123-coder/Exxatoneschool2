@@ -1,0 +1,468 @@
+/* ==========================================================================
+   EXXAT ONE DESIGN SYSTEM - OPTIMIZED
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Adobe Fonts / Typekit: IvyPresto Display for display headings */
+@import url("https://use.typekit.net/kmo8bbz.css");
+
+/* Font Awesome Pro Kit Integration */
+@import url('https://kit.fontawesome.com/bff072b36d.css');
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
+
+:root {
+  /* Typography - 14px base */
+  --font-size: 14px;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  --spacing-3xl: 3rem;
+  --spacing-4xl: 4rem;
+
+  /* Border Radius */
+  --radius: 0.571rem;
+  --radius-sm: 0.286rem;
+  --radius-md: 0.429rem;
+  --radius-lg: 0.571rem;
+  --radius-xl: 0.857rem;
+
+  /* Brand Color - E31C79 in OKLCH */
+  --brand-color: oklch(0.57 0.24 342);
+  --brand-color-dark: oklch(0.42 0.24 342);
+  
+  /* Core Colors - OKLCH Format with subtle brand tint */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.26 0.008 270);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.0058 264.53);
+  --secondary-foreground: oklch(0.082 0 0);
+  --muted: oklch(0.945 0.002 270);
+  --muted-foreground: oklch(0.55 0.012 270);
+  --accent: oklch(0.925 0.005 260);
+  --accent-foreground: oklch(0.082 0 0);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.002 270);
+  --ring: oklch(0.708 0 0);
+  --input: #8C8C92;
+  --input-background: oklch(0.97 0.002 270);
+
+  /* Control Border - WCAG AA 3:1 minimum contrast against white background */
+  --border-control: #8C8C92;
+
+  /* Chart Colors */
+  --chart-1: oklch(0.55 0.22 264.116);
+  --chart-2: oklch(0.48 0.15 184.704);
+  --chart-3: oklch(0.32 0.08 227.392);
+  --chart-4: oklch(0.65 0.18 84.429);
+  --chart-5: oklch(0.58 0.18 70.08);
+
+  /* Sidebar Colors with subtle brand tint */
+  --sidebar: oklch(0.97 0.02 343);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.082 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.945 0.025 343);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.92 0.025 343);
+
+  /* Tabs Colors */
+  --tabs-background: oklch(0.75 0 0);
+  --tabs-foreground: oklch(0.145 0 0);
+
+  /* Table Colors */
+  --table-border: oklch(0.32 0.005 270);
+  --table-hover: transparent;
+  --table-stripe: oklch(0.18 0 0);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-colors: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+  /* Shadows */
+  --shadow-sm: oklch(0 0 0 / 0.1) 0px 1px 2px 0px;
+  --shadow-md: oklch(0 0 0 / 0.1) 0px 1px 3px 0px, oklch(0 0 0 / 0.1) 0px 1px 2px -1px;
+  --shadow-lg: oklch(0 0 0 / 0.1) 0px 4px 6px -1px, oklch(0 0 0 / 0.1) 0px 2px 4px -2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COLOR THEMES (applied via class on <html>)
+   Current default (:root) is "Rose" (pink hue 343).
+   ══════════════════════════════════════════════════════════════ */
+
+/* Lavender Theme — #ebebff base, hue ~270 (blue-violet) */
+.theme-lavender {
+  --brand-color: oklch(0.55 0.20 270);
+  --brand-color-dark: oklch(0.40 0.20 270);
+  --sidebar: oklch(0.96 0.025 270);
+  --sidebar-accent: oklch(0.935 0.03 270);
+  --sidebar-border: oklch(0.91 0.025 270);
+  --secondary: oklch(0.95 0.012 270);
+  --accent: oklch(0.925 0.015 270);
+  --muted: oklch(0.945 0.008 270);
+}
+
+.theme-lavender.dark,
+.dark.theme-lavender {
+  --background: oklch(0.15 0.008 270);
+  --sidebar: oklch(0.22 0.015 270);
+  --sidebar-accent: oklch(0.28 0.012 270);
+  --sidebar-border: oklch(0.25 0.01 270);
+}
+
+/* Sage Theme — cool green hue ~155 */
+.theme-sage {
+  --brand-color: oklch(0.55 0.15 155);
+  --brand-color-dark: oklch(0.40 0.15 155);
+  --sidebar: oklch(0.96 0.02 155);
+  --sidebar-accent: oklch(0.935 0.025 155);
+  --sidebar-border: oklch(0.91 0.02 155);
+  --secondary: oklch(0.95 0.01 155);
+  --accent: oklch(0.925 0.012 155);
+  --muted: oklch(0.945 0.006 155);
+}
+
+.theme-sage.dark,
+.dark.theme-sage {
+  --background: oklch(0.15 0.008 155);
+  --sidebar: oklch(0.22 0.012 155);
+  --sidebar-accent: oklch(0.28 0.01 155);
+  --sidebar-border: oklch(0.25 0.008 155);
+}
+
+/* Dark Mode */
+.dark {
+  --background: oklch(0.15 0.008 342);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.28 0.005 270);
+  --ring: oklch(0.439 0 0);
+  --input: #8C8C92;
+  --input-background: oklch(0.205 0 0);
+  --border-control: #8C8C92;
+  --chart-1: oklch(0.7 0.22 264.376);
+  --chart-2: oklch(0.75 0.15 162.48);
+  --chart-3: oklch(0.78 0.12 227.392);
+  --chart-4: oklch(0.8 0.18 84.429);
+  --chart-5: oklch(0.75 0.18 70.08);
+  --sidebar: oklch(0.22 0.015 342);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.28 0.012 342);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.25 0.01 342);
+  --tabs-background: oklch(0.18 0.002 270);
+  --tabs-foreground: oklch(0.985 0 0);
+  --table-border: oklch(0.32 0.005 270);
+  --table-stripe: oklch(0.18 0 0);
+}
+
+/* Tailwind V4 Theme Configuration */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-border-control: var(--border-control);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-tabs-background: var(--tabs-background);
+  --color-tabs-foreground: var(--tabs-foreground);
+  --color-brand: var(--brand-color);
+  --color-brand-dark: var(--brand-color-dark);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Custom font sizes for 14px base - NO DECIMALS */
+  --font-size-xs: 0.857rem;    /* 12px */
+  --font-size-sm: 0.857rem;    /* 12px */
+  --font-size-base: 1rem;      /* 14px */
+  --font-size-lg: 1.143rem;    /* 16px */
+  --font-size-xl: 1.286rem;    /* 18px */
+  --font-size-2xl: 1.5rem;     /* 21px */
+  --font-size-3xl: 1.714rem;   /* 24px */
+  --font-size-4xl: 2rem;       /* 28px */
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+@layer base {
+  html {
+    font-size: var(--font-size);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Interactive controls use --border-control (#8C8C92) — exclude switches */
+  input,
+  textarea,
+  select,
+  button:not([role="switch"]) {
+    border-color: var(--border-control);
+  }
+
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 6px;
+    border: 3px solid var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  /* Typography System */
+  :where(:not([class*=" text-"]):not([class^="text-"])) {
+    h1 {
+      font-size: 2rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1.4;
+      color: var(--foreground);
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.4;
+      color: var(--foreground);
+      margin: 0;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+      color: var(--foreground);
+      margin: 0;
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+      color: var(--foreground);
+      margin: 0;
+    }
+
+    p, label, button, input, textarea, select, td, th, li {
+      font-size: 1rem;
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+      color: var(--foreground);
+      margin: 0;
+    }
+
+    th, button, label {
+      font-weight: var(--font-weight-medium);
+    }
+
+    small, caption {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+  }
+}
+
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+@layer components {
+  /* Sidebar */
+  .sidebar-base {
+    background-color: var(--sidebar);
+    color: var(--sidebar-foreground);
+    border-right: 1px solid var(--sidebar-border);
+    min-height: 100vh;
+  }
+
+  [data-sidebar="menu-button"][data-active="true"],
+  [data-sidebar="menu-sub-button"][data-active="true"] {
+    background-color: oklch(1 0 0) !important;
+    color: oklch(0.082 0 0) !important;
+    font-weight: var(--font-weight-semibold) !important;
+  }
+
+  [data-sidebar="menu-button"]:hover:not([data-active="true"]),
+  [data-sidebar="menu-sub-button"]:hover:not([data-active="true"]) {
+    background-color: var(--sidebar-accent) !important;
+    color: oklch(0.082 0 0) !important;
+  }
+
+  .dark [data-sidebar="menu-button"][data-active="true"],
+  .dark [data-sidebar="menu-sub-button"][data-active="true"] {
+    background-color: oklch(0.3 0.005 270) !important;
+    color: oklch(0.985 0 0) !important;
+  }
+
+  .dark [data-sidebar="menu-button"]:hover:not([data-active="true"]),
+  .dark [data-sidebar="menu-sub-button"]:hover:not([data-active="true"]) {
+    background-color: oklch(0.3 0.005 270) !important;
+    color: oklch(0.985 0 0) !important;
+  }
+
+  /* Tabs */
+  [data-slot="tabs-list"] {
+    background-color: var(--tabs-background);
+    border-radius: calc(var(--radius) - 2px);
+    padding: var(--spacing-xs);
+  }
+
+  [data-slot="tabs-trigger"] {
+    border-radius: calc(var(--radius) - 4px);
+    font-weight: var(--font-weight-medium);
+    font-size: 1rem;
+    color: var(--muted-foreground);
+    background-color: transparent;
+    transition: all 0.2s ease;
+  }
+
+  [data-slot="tabs-trigger"][data-state="active"] {
+    background-color: oklch(1 0 0);
+    color: var(--foreground);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .dark [data-slot="tabs-trigger"][data-state="active"] {
+    background-color: oklch(0.3 0.005 270);
+    color: oklch(0.985 0 0);
+  }
+
+  /* Enhanced Checkbox — High visibility */
+  button[role="checkbox"] {
+    border: 1.5px solid var(--border-control) !important;
+    border-radius: 3px !important;
+    width: 16px !important;
+    height: 16px !important;
+    background-color: var(--background) !important;
+  }
+
+  button[role="checkbox"][data-state="checked"] {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+  }
+
+  button[role="checkbox"]:focus-visible {
+    outline: 2px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Data Table Styles */
+  .data-table-header {
+    background-color: var(--muted);
+  }
+
+  .dark .data-table-header {
+    background-color: oklch(0.22 0.005 270);
+  }
+
+  /* Clickable table links — theme-aware blue */
+  .data-table-clickable {
+    color: var(--chart-1);
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  .data-table-clickable:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+
+  /* Display font utility — IvyPresto Display for greeting headers and page h1 */
+  .font-display {
+    font-family: "ivypresto-display", Georgia, "Times New Roman", serif !important;
+  }
+}
