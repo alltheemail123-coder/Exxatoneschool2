@@ -3,7 +3,8 @@ import {
   ChevronsUpDown,
   Check,
 } from "lucide-react"
-import mayoLogo from 'figma:asset/a9bd9c428ec870c1ad5a631d9a5feb14b653a96d.png'
+// Use Unsplash image for logo instead of Figma asset for portability
+const mayoLogo = "https://images.unsplash.com/photo-1684403798139-289e0f7fa5da?w=100&h=100&fit=crop&crop=entropy&q=80"
 import { ImageWithFallback } from '../figma/ImageWithFallback'
 import { FontAwesomeIcon, type IconName } from "../brand/font-awesome-icon"
 
