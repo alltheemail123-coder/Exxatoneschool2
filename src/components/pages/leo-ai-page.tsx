@@ -9,7 +9,7 @@ import {
   ArrowUp,
   User,
 } from "lucide-react"
-import { useChatContext } from "../chat-context"
+import { useChatContext } from "../features/chat-context"
 import Leo from "../../imports/Leo-68-134"
 
 const suggestions = [

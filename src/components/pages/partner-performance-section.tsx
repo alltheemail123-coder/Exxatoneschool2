@@ -3,28 +3,9 @@
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { AskLeoButton } from "../ask-leo-button";
+import { AskLeoButton } from "../shared/ask-leo-button";
 import { Building2, TrendingUp, Clock, Star } from "lucide-react";
-
-// Partner performance data
-const partnerPerformanceData = [
-  { name: "Mayo Clinic", placements: 45, responseRate: 92, satisfaction: 4.8 },
-  { name: "Johns Hopkins", placements: 52, responseRate: 88, satisfaction: 4.7 },
-  { name: "Cleveland Clinic", placements: 38, responseRate: 95, satisfaction: 4.9 },
-  { name: "Mass General", placements: 41, responseRate: 85, satisfaction: 4.5 },
-  { name: "Stanford Health", placements: 31, responseRate: 90, satisfaction: 4.6 },
-  { name: "UCSF Medical", placements: 35, responseRate: 87, satisfaction: 4.4 },
-];
-
-// Response time data
-const responseTimeData = [
-  { name: "Mayo Clinic", avgDays: 2.1 },
-  { name: "Johns Hopkins", avgDays: 3.4 },
-  { name: "Cleveland Clinic", avgDays: 1.8 },
-  { name: "Mass General", avgDays: 4.2 },
-  { name: "Stanford Health", avgDays: 2.9 },
-  { name: "UCSF Medical", avgDays: 3.1 },
-];
+import { partnerPerformanceData, responseTimeData } from "../../data/dashboard-data";
 
 export function PartnerPerformanceSection() {
   return (

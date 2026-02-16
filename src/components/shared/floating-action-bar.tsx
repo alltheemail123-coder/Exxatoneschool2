@@ -118,8 +118,8 @@ export const getPipelineActionsForStage = (stage: string): BulkAction[] => {
   }
 }
 
-// Availability page bulk actions
-export const availabilityBulkActions: BulkAction[] = [
+// Slots page bulk actions
+export const slotsBulkActions: BulkAction[] = [
   { id: "publish", label: "Publish", icon: CheckCircle, variant: "default", color: "bg-chart-2 hover:bg-chart-2" },
   { id: "unpublish", label: "Unpublish", icon: XCircle, variant: "secondary" },
   { id: "duplicate", label: "Duplicate", icon: Copy, variant: "outline" },

@@ -45,14 +45,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../ui/popover"
-import { DataTable, type ColumnConfig } from "../data-table"
-import { type PaginationInfo } from "../pagination"
-import { TableProperties } from "../table-properties"
-import FilterBar, { type FilterConfig, type ActiveFilter } from "../filter-bar"
-import { BulkActionBar, availabilityBulkActions } from "../floating-action-bar"
-import { ViewManager, type ViewSettings } from "../view-manager"
-import { MetricCard, createMetricCardData } from "../metric-card"
-import { availabilityData } from "../../data/availability-data"
+import { DataTable, type ColumnConfig } from "../shared/data-table"
+import { type PaginationInfo } from "../shared/pagination"
+import { TableProperties } from "../shared/table-properties"
+import FilterBar, { type FilterConfig, type ActiveFilter } from "../shared/filter-bar"
+import { BulkActionBar, slotsBulkActions } from "../shared/floating-action-bar"
+import { ViewManager, type ViewSettings } from "../shared/view-manager"
+import { MetricCard, createMetricCardData } from "../shared/metric-card"
+import { slotsData as availabilityData } from "../../data/mock-data"
 
 const requestedSlotsMetrics = [
   createMetricCardData(
@@ -289,7 +289,7 @@ export function RequestedSlotsPage({ onItemClick }: RequestedSlotsPageProps) {
       </div>
 
       {selectedItems.length > 0 && (
-        <BulkActionBar selectedCount={selectedItems.length} onClear={handleClearSelection} actions={availabilityBulkActions.map(action => ({ label: action.label, icon: action.icon, onClick: () => handleBulkAction(action.action, selectedItems), variant: action.variant }))} />
+        <BulkActionBar selectedCount={selectedItems.length} onClear={handleClearSelection} actions={slotsBulkActions.map(action => ({ label: action.label, icon: action.icon, onClick: () => handleBulkAction(action.action, selectedItems), variant: action.variant }))} />
       )}
     </div>
   )

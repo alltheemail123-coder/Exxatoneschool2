@@ -14,14 +14,14 @@ import { OutlineSearchInput } from "../ui/outline-search-input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { DataTable, type ColumnConfig } from "../data-table"
-import { type PaginationInfo } from "../pagination"
-import { TableProperties } from "../table-properties"
-import FilterBar, { type FilterConfig, type ActiveFilter } from "../filter-bar"
-import { BulkActionBar, availabilityBulkActions } from "../floating-action-bar"
-import { ViewManager, type ViewSettings } from "../view-manager"
-import { MetricCard, createMetricCardData } from "../metric-card"
-import { availabilityData } from "../../data/availability-data"
+import { DataTable, type ColumnConfig } from "../shared/data-table"
+import { type PaginationInfo } from "../shared/pagination"
+import { TableProperties } from "../shared/table-properties"
+import FilterBar, { type FilterConfig, type ActiveFilter } from "../shared/filter-bar"
+import { BulkActionBar, slotsBulkActions } from "../shared/floating-action-bar"
+import { ViewManager, type ViewSettings } from "../shared/view-manager"
+import { MetricCard, createMetricCardData } from "../shared/metric-card"
+import { slotsData as availabilityData } from "../../data/mock-data"
 
 const approvedSlotsMetrics = [
   createMetricCardData("Total Approved", "124", CheckCircle, "text-chart-2", { change: "+15%", trend: "up", description: "This semester" }),
@@ -140,7 +140,7 @@ export function ApprovedSlotsPage({ onItemClick }: ApprovedSlotsPageProps) {
           <TabsContent value="completed" className="min-h-[400px] m-0"><div className="p-8 text-center text-muted-foreground h-full flex flex-col items-center justify-center"><CheckCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground/30" /><p>No completed slots</p></div></TabsContent>
         </Tabs>
       </div>
-      {selectedItems.length > 0 && (<BulkActionBar selectedCount={selectedItems.length} onClear={handleClearSelection} actions={availabilityBulkActions.map(action => ({ label: action.label, icon: action.icon, onClick: () => handleBulkAction(action.action, selectedItems), variant: action.variant }))} />)}
+      {selectedItems.length > 0 && (<BulkActionBar selectedCount={selectedItems.length} onClear={handleClearSelection} actions={slotsBulkActions.map(action => ({ label: action.label, icon: action.icon, onClick: () => handleBulkAction(action.action, selectedItems), variant: action.variant }))} />)}
     </div>
   )
 }

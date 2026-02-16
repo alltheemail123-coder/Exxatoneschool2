@@ -464,5 +464,6 @@
   /* Display font utility — IvyPresto Display for greeting headers and page h1 */
   .font-display {
     font-family: "ivypresto-display", Georgia, "Times New Roman", serif !important;
+    font-weight: 300 !important;
   }
 }

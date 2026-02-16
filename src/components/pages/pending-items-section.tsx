@@ -3,23 +3,10 @@
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { AskLeoButton } from "../ask-leo-button";
+import { AskLeoButton } from "../shared/ask-leo-button";
+import { requestsAgeData, schedulesAgeData } from "../../data/dashboard-data";
 
 // Pending Items by Age
-const requestsAgeData = [
-  { age: "<7 days", count: 142 },
-  { age: "7-15 days", count: 98 },
-  { age: "16-30 days", count: 123 },
-  { age: ">30 days", count: 123 },
-];
-
-const schedulesAgeData = [
-  { age: "<7 days", count: 28 },
-  { age: "7-15 days", count: 15 },
-  { age: "16-30 days", count: 8 },
-  { age: ">30 days", count: 5 },
-];
-
 export function PendingItemsSection() {
   return (
     <div className="px-4 lg:px-6 space-y-4">

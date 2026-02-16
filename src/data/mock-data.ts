@@ -253,6 +253,132 @@ export function generateSitePartnerData(count: number = 25) {
   }));
 }
 
+// ─── Slots/Availability Data (used by Slots, Requested Slots, Approved Slots pages) ──
+
+const slotStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
+const slotCities = ["Birmingham", "Fairbanks", "Phoenix", "Little Rock", "Los Angeles", "Denver", "Hartford", "Dover", "Miami", "Atlanta", "Honolulu", "Boise", "Chicago", "Indianapolis", "Des Moines", "Topeka", "Louisville", "New Orleans", "Portland", "Baltimore", "Boston", "Detroit", "Minneapolis", "Jackson", "Kansas City", "Billings", "Omaha", "Las Vegas", "Concord", "Newark", "Albuquerque", "New York", "Charlotte", "Fargo", "Columbus", "Oklahoma City", "Portland", "Philadelphia", "Providence", "Charleston", "Sioux Falls", "Nashville", "Houston", "Salt Lake City", "Montpelier", "Richmond", "Seattle", "Charleston", "Milwaukee", "Cheyenne"];
+const slotDisciplines = ["Physical Therapy", "Occupational Therapy", "Speech-Language Pathology", "Physical Therapy Assistant", "Occupational Therapy Assistant", "Audiology", "Respiratory Therapy", "Recreational Therapy"];
+const slotSpecializations = ["Orthopedic", "Pediatric", "General", "Sports Medicine", "Neurological", "Geriatric", "Cardiovascular", "Acute Care", "Mental Health", "Hand Therapy", "Voice Disorders", "Stroke Rehabilitation", "Adult Rehabilitation", "Outpatient", "Wound Care", "Cardiac Rehabilitation"];
+const slotDurations = ["6 weeks", "8 weeks", "10 weeks", "12 weeks", "14 weeks", "16 weeks", "18 weeks", "20 weeks"];
+const slotExperienceTypes = ["Individual", "Group"];
+const slotHospitalSites = [
+  "Belmont - Park St", "Downtown - Main Campus", "Westside - Medical Center",
+  "Northshore - Clinic", "Southside - Rehabilitation", "Eastgate - Outpatient",
+  "Midtown - Specialty Care", "Riverside - Acute Care", "Hillcrest - Pediatric",
+  "Valley - Orthopedic", "Summit - Cardiac", "Lakeside - Geriatric",
+  "Parkview - Mental Health", "Crossroads - Emergency", "Harbor - Trauma Center",
+];
+const slotTimeIndicators = ["Just now", "5 minutes ago", "15 minutes ago", "30 minutes ago", "1 hour ago", "2 hours ago", "3 hours ago", "5 hours ago", "6 hours ago", "1 day ago", "2 days ago", "3 days ago", "4 days ago", "5 days ago", "1 week ago"];
+const slotRequestTypes = ["student", "faculty", "school"];
+const slotPrograms = ["Physical Therapy", "Nursing", "Occupational Therapy", "Respiratory Therapy", "Medical Assistant"];
+
+function generateSlotRandomDate() {
+  const start = new Date();
+  const end = new Date();
+  end.setMonth(start.getMonth() + 6);
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+function generateSlotEndDate(startDate: Date, duration: string) {
+  const weeks = parseInt(duration.split(' ')[0]);
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + (weeks * 7));
+  return endDate;
+}
+
+function generateYearRoundDates() {
+  const currentYear = new Date().getFullYear();
+  return {
+    startDate: new Date(currentYear, 0, 1),
+    endDate: new Date(currentYear, 11, 31),
+  };
+}
+
+function generateSlotsData() {
+  const data = [];
+
+  for (let i = 0; i < 120; i++) {
+    const state = slotStates[Math.floor(Math.random() * slotStates.length)];
+    const city = slotCities[Math.floor(Math.random() * slotCities.length)];
+    const discipline = slotDisciplines[Math.floor(Math.random() * slotDisciplines.length)];
+    const specialization = slotSpecializations[Math.floor(Math.random() * slotSpecializations.length)];
+    const duration = slotDurations[Math.floor(Math.random() * slotDurations.length)];
+    const experienceType = slotExperienceTypes[Math.floor(Math.random() * slotExperienceTypes.length)];
+    const hospitalSite = slotHospitalSites[Math.floor(Math.random() * slotHospitalSites.length)];
+
+    const isUnlimited = Math.random() < 0.3;
+    const isYearRound = Math.random() < 0.3;
+
+    let startDate: Date;
+    let endDate: Date;
+    let totalSlots: number;
+
+    if (isYearRound) {
+      const yearRoundDates = generateYearRoundDates();
+      startDate = yearRoundDates.startDate;
+      endDate = yearRoundDates.endDate;
+    } else {
+      startDate = generateSlotRandomDate();
+      endDate = generateSlotEndDate(startDate, duration);
+    }
+
+    if (isUnlimited) {
+      totalSlots = -1; // -1 represents unlimited
+    } else {
+      totalSlots = Math.floor(Math.random() * 25) + 8; // 8-32 slots
+    }
+
+    const totalRequest = isUnlimited ? Math.floor(Math.random() * 50) + 10 : Math.floor(Math.random() * totalSlots);
+    const pendingReview = Math.floor(Math.random() * 5);
+
+    const hasRecentRequest = Math.random() < 0.3;
+    const isNewRequest = Math.random() < 0.15;
+    const lastRequestTime = hasRecentRequest || isNewRequest ? slotTimeIndicators[Math.floor(Math.random() * slotTimeIndicators.length)] : null;
+
+    const requestedBy = slotRequestTypes[Math.floor(Math.random() * slotRequestTypes.length)];
+    const program = requestedBy === "school" ? slotPrograms[Math.floor(Math.random() * slotPrograms.length)] : null;
+
+    const id = Math.floor(Math.random() * 999999999).toString();
+
+    const disciplineAbbr = discipline === "Physical Therapy" ? "PT"
+      : discipline === "Occupational Therapy" ? "OT"
+      : discipline === "Speech-Language Pathology" ? "SLP"
+      : discipline === "Physical Therapy Assistant" ? "PTA"
+      : discipline === "Occupational Therapy Assistant" ? "OTA"
+      : discipline === "Audiology" ? "AUD"
+      : discipline === "Respiratory Therapy" ? "RT"
+      : "REC";
+
+    const name = `${state} - ${city}-${disciplineAbbr}-H1 2025`;
+
+    data.push({
+      id,
+      name,
+      experienceType,
+      location: hospitalSite,
+      discipline,
+      specialization,
+      totalSlots,
+      totalRequest,
+      pendingReview,
+      duration,
+      startDate: formatDate(startDate),
+      endDate: formatDate(endDate),
+      hasRecentRequest,
+      isNewRequest,
+      lastRequestTime,
+      isUnlimited,
+      isYearRound,
+      requestedBy,
+      program,
+    });
+  }
+
+  return data;
+}
+
+export const slotsData = generateSlotsData();
+
 // Utility function to generate random dates
 export function generateRandomDate(minDaysFromNow: number, maxDaysFromNow: number): string {
   const now = new Date();

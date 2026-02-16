@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Button } from "../ui/button";
 import { Calendar } from "lucide-react";
-import { AskLeoButton } from "../ask-leo-button";
+import { AskLeoButton } from "../shared/ask-leo-button";
 import {
   Select,
   SelectContent,
@@ -20,22 +20,7 @@ import {
 } from "../ui/popover";
 import { Calendar as CalendarComponent } from "../ui/calendar";
 import { format } from "date-fns";
-
-// Schedule Pipeline Data
-const pipelineData = [
-  { name: "To Be Scheduled", value: 11, color: "var(--chart-1)" },
-  { name: "Confirmed", value: 2, color: "var(--chart-2)" },
-  { name: "Not Confirmed", value: 0, color: "var(--chart-4)" },
-  { name: "Cancelled", value: 0, color: "var(--chart-5)" },
-];
-
-// Student Onboarding Data
-const onboardingData = [
-  { name: "Compliant", value: 745, color: "var(--chart-2)" },
-  { name: "Pending Documents", value: 186, color: "var(--chart-4)" },
-  { name: "Expired Credentials", value: 92, color: "var(--chart-5)" },
-  { name: "Not Started", value: 211, color: "var(--muted)" },
-];
+import { pipelineData, onboardingData } from "../../data/dashboard-data";
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {

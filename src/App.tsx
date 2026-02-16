@@ -8,20 +8,8 @@ import { useAppStore } from "./stores/app-store";
 // Each page bundle only loads when first navigated to, reducing initial JS by ~60%
 // Import paths use the organized /components/{pages,features,shared}/ structure.
 
-const LazyAvailabilityPage = React.lazy(() =>
-  import("./components/pages/availability-page").then(m => ({ default: m.AvailabilityPage }))
-);
-const LazyAvailabilityDetail = React.lazy(() =>
-  import("./components/pages/availability-detail").then(m => ({ default: m.AvailabilityDetail }))
-);
-const LazyRequestDetailPage = React.lazy(() =>
-  import("./components/pages/request-detail-page").then(m => ({ default: m.RequestDetailPage }))
-);
 const LazySchoolProfile = React.lazy(() =>
   import("./components/pages/school-profile").then(m => ({ default: m.SchoolProfile }))
-);
-const LazyStudentProfile = React.lazy(() =>
-  import("./components/pages/student-profile").then(m => ({ default: m.StudentProfile }))
 );
 const LazyLeoAIPage = React.lazy(() =>
   import("./components/pages/leo-ai-page").then(m => ({ default: m.LeoAIPage }))
@@ -102,17 +90,10 @@ const SectionLoader = () => (
 
 /** Grab all navigation actions once — they're stable across renders */
 const useActions = () => {
-  // Actions from Zustand are stable references (they never change),
-  // so subscribing to them individually is safe and won't cause re-renders.
   const store = useAppStore;
   return React.useMemo(() => ({
     setShowNotifications: store.getState().setShowNotifications,
     navigateToPage: store.getState().navigateToPage,
-    navigateToAvailabilityDetail: store.getState().navigateToAvailabilityDetail,
-    navigateBackToAvailability: store.getState().navigateBackToAvailability,
-    navigateToRequestDetail: store.getState().navigateToRequestDetail,
-    navigateBackFromRequestDetail: store.getState().navigateBackFromRequestDetail,
-    updateRequestStage: store.getState().updateRequestStage,
     navigateToSchoolProfile: store.getState().navigateToSchoolProfile,
     navigateToStudentProfile: store.getState().navigateToStudentProfile,
     navigateBackFromSchoolProfile: store.getState().navigateBackFromSchoolProfile,
@@ -131,14 +112,10 @@ function App() {
   // ── State selectors (each subscribes only to its own slice) ──
   const currentPage = useAppStore(s => s.currentPage);
   const showNotifications = useAppStore(s => s.showNotifications);
-  const selectedAvailabilityId = useAppStore(s => s.selectedAvailabilityId);
-  const selectedRequestId = useAppStore(s => s.selectedRequestId);
-  const selectedRequestStage = useAppStore(s => s.selectedRequestStage);
   const selectedSchoolId = useAppStore(s => s.selectedSchoolId);
   const selectedStudentId = useAppStore(s => s.selectedStudentId);
   const selectedScheduleId = useAppStore(s => s.selectedScheduleId);
   const showLeoPanel = useAppStore(s => s.showLeoPanel);
-  // FIX: Extract hook call to component body (was illegally called in JSX before)
   const leoPanelContext = useAppStore(s => s.leoPanelContext);
 
   // ── Stable action references (never cause re-renders) ──
@@ -153,10 +130,8 @@ function App() {
     if (selectedStudentId) context = "Student Profile";
     else if (selectedSchoolId) context = "School Profile";
     else if (selectedScheduleId) context = "Schedule Detail";
-    else if (selectedRequestId) context = "Request Detail";
-    else if (selectedAvailabilityId) context = "Availability Detail";
     actions.setLeoPanelContext(context);
-  }, [currentPage, selectedAvailabilityId, selectedRequestId, selectedSchoolId, selectedStudentId, selectedScheduleId, actions]);
+  }, [currentPage, selectedSchoolId, selectedStudentId, selectedScheduleId, actions]);
 
   // ── Theme bootstrap (runs once) ──
   React.useEffect(() => {
@@ -189,17 +164,6 @@ function App() {
     "--sidebar-width-icon": "48px",
   } as React.CSSProperties), [showNotifications]);
 
-  // ── Breadcrumb configs (stable references via useMemo) ──
-  const requestDetailBreadcrumbs: BreadcrumbItemType[] = React.useMemo(() => [
-    { label: "Home", onClick: () => actions.navigateToPage("Home") },
-    { label: "Availability", onClick: actions.navigateBackFromRequestDetail },
-  ], [actions]);
-
-  const availabilityDetailBreadcrumbs: BreadcrumbItemType[] = React.useMemo(() => [
-    { label: "Home", onClick: () => actions.navigateToPage("Home") },
-    { label: "Availability", onClick: actions.navigateBackToAvailability },
-  ], [actions]);
-
   // ── Shared SiteHeader props (avoids repetition) ──
   const leoProps = React.useMemo(() => ({
     onLeoToggle: actions.toggleLeoPanel,
@@ -208,81 +172,6 @@ function App() {
   }), [actions, showLeoPanel]);
 
   // ── Render helpers ──
-
-  const renderAvailabilityContent = () => {
-    if (selectedSchoolId) {
-      return (
-        <div className="min-w-0 overflow-clip bg-background text-foreground">
-          <SiteHeader currentPage="School Profile" {...leoProps} />
-          <React.Suspense fallback={<PageLoader />}>
-            <LazySchoolProfile
-              schoolId={selectedSchoolId}
-              onBack={actions.navigateBackFromSchoolProfile}
-              onStudentClick={actions.navigateToStudentProfile}
-            />
-          </React.Suspense>
-        </div>
-      );
-    }
-
-    if (selectedStudentId) {
-      return (
-        <div className="min-w-0 overflow-clip bg-background text-foreground">
-          <SiteHeader currentPage="Student Profile" {...leoProps} />
-          <React.Suspense fallback={<PageLoader />}>
-            <LazyStudentProfile
-              studentId={selectedStudentId}
-              onBack={actions.navigateBackFromStudentProfile}
-              onSchoolClick={actions.navigateToSchoolProfile}
-            />
-          </React.Suspense>
-        </div>
-      );
-    }
-
-    if (selectedRequestId) {
-      return (
-        <div className="min-w-0 overflow-clip bg-background text-foreground">
-          <SiteHeader currentPage="Johns Hopkins University" breadcrumbs={requestDetailBreadcrumbs} {...leoProps} />
-          <React.Suspense fallback={<PageLoader />}>
-            <LazyRequestDetailPage
-              requestId={selectedRequestId}
-              stage={selectedRequestStage}
-              onBack={actions.navigateBackFromRequestDetail}
-              onStageUpdate={actions.updateRequestStage}
-              onSchoolClick={actions.navigateToSchoolProfile}
-              onStudentClick={actions.navigateToStudentProfile}
-            />
-          </React.Suspense>
-        </div>
-      );
-    }
-
-    if (selectedAvailabilityId) {
-      return (
-        <div className="min-w-0 overflow-clip bg-background text-foreground">
-          <SiteHeader currentPage="Availability Detail" breadcrumbs={availabilityDetailBreadcrumbs} {...leoProps} />
-          <React.Suspense fallback={<PageLoader />}>
-            <LazyAvailabilityDetail
-              availabilityId={selectedAvailabilityId}
-              onBack={actions.navigateBackToAvailability}
-              onViewRequestDetails={actions.navigateToRequestDetail}
-              onStageUpdate={actions.updateRequestStage}
-            />
-          </React.Suspense>
-        </div>
-      );
-    }
-
-    return (
-      <div className="min-w-0 overflow-hidden bg-background text-foreground h-full flex flex-col">
-        <SiteHeader currentPage="Availability" {...leoProps} />
-        <React.Suspense fallback={<PageLoader />}>
-          <LazyAvailabilityPage onItemClick={actions.navigateToAvailabilityDetail} />
-        </React.Suspense>
-      </div>
-    );
-  };
 
   const renderContent = () => {
     switch (currentPage) {
@@ -319,7 +208,7 @@ function App() {
           <div className="min-w-0 overflow-hidden bg-background text-foreground h-full flex flex-col">
             <SiteHeader currentPage="Slots" {...leoProps} />
             <React.Suspense fallback={<PageLoader />}>
-              <LazySlotsPage onItemClick={actions.navigateToAvailabilityDetail} />
+              <LazySlotsPage />
             </React.Suspense>
           </div>
         );
@@ -359,7 +248,7 @@ function App() {
           <div className="min-w-0 overflow-hidden bg-background text-foreground h-full flex flex-col">
             <SiteHeader currentPage="Requested Slots" {...leoProps} />
             <React.Suspense fallback={<PageLoader />}>
-              <LazyRequestedSlotsPage onItemClick={actions.navigateToAvailabilityDetail} />
+              <LazyRequestedSlotsPage />
             </React.Suspense>
           </div>
         );
@@ -369,13 +258,10 @@ function App() {
           <div className="min-w-0 overflow-hidden bg-background text-foreground h-full flex flex-col">
             <SiteHeader currentPage="Approved Slots" {...leoProps} />
             <React.Suspense fallback={<PageLoader />}>
-              <LazyApprovedSlotsPage onItemClick={actions.navigateToAvailabilityDetail} />
+              <LazyApprovedSlotsPage />
             </React.Suspense>
           </div>
         );
-
-      case "Availability":
-        return renderAvailabilityContent();
 
       case "Wishlist":
         return (

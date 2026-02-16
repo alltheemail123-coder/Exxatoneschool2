@@ -28,7 +28,7 @@ import {
   Bell,
 } from "lucide-react";
 
-import { FontAwesomeIcon, type IconName } from "../font-awesome-icon";
+import { FontAwesomeIcon, type IconName } from "../brand/font-awesome-icon";
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
@@ -66,7 +66,7 @@ import {
 } from "../ui/sidebar";
 import Leo from "../../imports/Leo-68-134";
 import ExxatOneLogo from "../../imports/Layer12-2076-99";
-import { ExxatLogoMark } from "../exxat-logo-mark";
+import { ExxatLogoMark } from "../brand/exxat-logo-mark";
 
 // Wrapper component to constrain Leo icon size
 const LeoIcon = () => (
@@ -187,13 +187,6 @@ const data = {
     },
   ],
   projects: [
-    {
-      name: "Availability",
-      url: "#",
-      icon: "door-open" as IconName,
-      hasNewRequests: true,
-      newRequestCount: 5,
-    },
     {
       name: "School Request",
       url: "#",

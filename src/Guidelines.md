@@ -11,7 +11,7 @@ This document outlines the design system guidelines and component usage rules fo
 - **Style**: Black background (`--primary: #030213`) with white text
 - **Usage**: For main actions, form submissions, and primary CTAs
 - **Import**: `import { Button } from "./ui/button"`
-- **Example**: `<Button>Create Availability</Button>`
+- **Example**: `<Button>Create Schedule</Button>`
 
 **Button Hierarchy:**
 - **Primary**: Default button (black) - for main actions
@@ -95,12 +95,12 @@ This document outlines the design system guidelines and component usage rules fo
 ```
 
 ### 4. Header Component Pattern
-**Use the availability detail header pattern for all secondary and tertiary pages.**
+**Use the schedule detail header pattern for all secondary and tertiary pages.**
 
 **Page Hierarchy:**
-- **Primary**: Main pages (Home, Availability List, Leo AI)
-- **Secondary**: Detail pages (Availability Detail)  
-- **Tertiary**: Sub-detail pages (Request Details)
+- **Primary**: Main pages (Home, Slots, Leo AI)
+- **Secondary**: Detail pages (Schedule Detail)  
+- **Tertiary**: Sub-detail pages (School Profile, Student Profile)
 
 **Header Structure for Secondary/Tertiary Pages:**
 - Page title with breadcrumb context
@@ -111,7 +111,7 @@ This document outlines the design system guidelines and component usage rules fo
 
 **Example Usage:**
 ```tsx
-// Secondary Page (Availability Detail)
+// Secondary Page (Schedule Detail)
 <div className="px-4 lg:px-6 pt-4 lg:pt-6 space-y-6">
   <div className="flex items-start justify-between">
     <div className="space-y-2">
@@ -131,7 +131,7 @@ This document outlines the design system guidelines and component usage rules fo
 - **FilterBar**: Use the existing FilterBar component for all filtering interfaces
 - **Search**: Include search input in page headers with Search icon and consistent placeholder text
 - **Filter Button**: Toggle filter visibility with Filter icon, use active state styling
-- **Integration**: Match the pattern used in availability-page.tsx and reports-page.tsx
+- **Integration**: Match the pattern used in student-schedule-page.tsx and reports-page.tsx
 
 **Example Implementation:**
 ```tsx
@@ -214,11 +214,11 @@ const formatDate = (date: string | Date) => {
 // Store usage
 const currentPage = useAppStore((state) => state.currentPage);
 const navigateToPage = useAppStore((state) => state.navigateToPage);
-const selectedAvailabilityId = useAppStore((state) => state.selectedAvailabilityId);
+const selectedScheduleId = useAppStore((state) => state.selectedScheduleId);
 
 // Navigation
-const handleItemClick = (id: string) => {
-  navigateToAvailabilityDetail(id);
+const handleItemClick = (scheduleId: string) => {
+  navigateToScheduleDetail(scheduleId);
 };
 ```
 
@@ -588,7 +588,7 @@ Our sub-nav follows the **Intercom/Linear pattern** — sub-items are **contextu
 
 - **Current page**: `isActive=true` → darker background (`bg-sidebar-accent`), `font-semibold`, solid icon variant
 - **Detail pages**: Parent nav item stays active (e.g. viewing Schedule Details → "Student Schedule" stays highlighted)
-- **Sub-pages**: When on Availability Detail → "Availability" stays active; when on School/Student Profile navigated FROM Availability → "Availability" stays active
+- **Sub-pages**: When on Schedule Detail → "Student Schedule" stays active; when on School/Student Profile navigated FROM Student Schedule → "Student Schedule" stays active
 - **Only one item active** at any time — no multi-highlight
 
 #### Collapsed (Icon) Mode Rules
@@ -634,7 +634,7 @@ When adding a new page/feature to the sidebar:
 - **Primary pages**: No breadcrumbs (they ARE the top level)
 - **Secondary/Detail pages**: Breadcrumbs show `Home > Parent Page` + page title in header
 - **Tertiary pages**: Breadcrumbs show `Home > Parent Page` with deeper context
-- **Page title**: Use descriptive static names (e.g. "Schedule Details", "Availability Detail") — NOT dynamic data
+- **Page title**: Use descriptive static names (e.g. "Schedule Details", "School Profile") — NOT dynamic data
 - **Clickable crumbs**: Each breadcrumb segment navigates back to that level
 
 #### Sidebar Implementation Reference
@@ -670,7 +670,7 @@ When adding a new page/feature to the sidebar:
 ### Page Layout Structure
 **Follow consistent page layout patterns across the application.**
 
-1. **Primary Pages** (Home, Availability List):
+1. **Primary Pages** (Home, Slots):
    - SiteHeader with page title
    - Main content area with proper padding
    - Optional sections with consistent spacing
@@ -1076,8 +1076,8 @@ Before shipping any new component or page, verify:
 │   ├── team-switcher.tsx
 │   └── index.ts
 ├── pages/           # Full page-level components (one per route/view)
-│   ├── availability-page.tsx
-│   ├── availability-detail.tsx
+│   ├── student-schedule-page.tsx
+│   ├── student-schedule-detail.tsx
 │   ├── reports-page.tsx
 │   ├── ... (all page components)
 │   └── index.ts
@@ -1095,10 +1095,9 @@ Before shipping any new component or page, verify:
 ```
 
 **Import conventions:**
-- **From App.tsx**: `import("./components/pages/availability-page")`, `import("./components/features/leo-panel")`
+- **From App.tsx**: `import("./components/pages/student-schedule-page")`, `import("./components/features/leo-panel")`
 - **Between components**: Use relative paths — `"../ui/button"`, `"../shared/data-table"`, `"../../stores/app-store"`
 - **Barrel imports** (optional): `import { DataTable, FilterBar } from "../shared"`
-- **Legacy paths**: Original flat files in `/components/` still exist as canonical sources during migration; organized paths use re-exports where the file hasn't been physically moved yet
 
 ### Code Organization
 - **File structure**: Follow the subdirectory patterns above for all new components
@@ -1114,4 +1113,4 @@ Before shipping any new component or page, verify:
 
 ---
 
-*These guidelines ensure consistency across the Exxat One platform and should be followed for all new components and features. Always refer to existing implementations (availability-page.tsx, reports-page.tsx) as reference patterns when creating new pages or components.*
+*These guidelines ensure consistency across the Exxat One platform and should be followed for all new components and features. Always refer to existing implementations (student-schedule-page.tsx, reports-page.tsx) as reference patterns when creating new pages or components.*

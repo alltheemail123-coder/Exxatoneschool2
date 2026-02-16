@@ -5,7 +5,7 @@ import {
 } from "lucide-react"
 import mayoLogo from 'figma:asset/a9bd9c428ec870c1ad5a631d9a5feb14b653a96d.png'
 import { ImageWithFallback } from '../figma/ImageWithFallback'
-import { FontAwesomeIcon, type IconName } from "../font-awesome-icon"
+import { FontAwesomeIcon, type IconName } from "../brand/font-awesome-icon"
 
 import {
   DropdownMenu,

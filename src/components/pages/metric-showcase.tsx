@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { Sparkles, X, AlertTriangle, Clock } from "lucide-react"
-import { SimpleMetric, createSimpleMetricData } from "../simple-metric"
-import { InsightCard, createInsightCardData } from "../insight-card"
+import { SimpleMetric, createSimpleMetricData } from "../shared/simple-metric"
+import { InsightCard, createInsightCardData } from "../shared/insight-card"
 import { cn } from "../ui/utils"
 import {
   Select,
@@ -12,16 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
-
-// Metric data with historical tracking
-const metricsData = {
-  pendingRequests: { current: 23, previous: 18, trend: "up" as const },
-  confirmedPlacements: { current: 89, previous: 77, trend: "up" as const },
-  pendingReviews: { current: 8, previous: 11, trend: "down" as const },
-  availableSlots: { current: 156, previous: 132, trend: "up" as const },
-  complianceRate: { current: 98, previous: 96, trend: "up" as const },
-  newApplications: { current: 34, previous: 27, trend: "up" as const },
-}
+import { metricsData } from "../../data/dashboard-data"
 
 /**
  * MetricShowcase - Key metrics with attention-focused insight card
